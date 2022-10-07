@@ -31,7 +31,7 @@ function showNotes() {
         <div class="card-body">
           <h5 class="card-title">Note ${index + 1}</h5>
           <p class="card-text">${element}</p>
-          <button href="#" class="btn btn-primary">
+          <button id="${index}" onclick="deleteNote(this.id)" class="btn btn-primary">
             Delete Note
           </button>
         </div>
@@ -58,7 +58,7 @@ function deleteNote(index) {
   }
   notesObj.splice(index, 1); //remove item with the help of the index given
   localStorage.setItem("notes", JSON.stringify(notesObj));
-  showNotes;
+  showNotes();
 }
 
 // to search
