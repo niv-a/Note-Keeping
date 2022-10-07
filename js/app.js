@@ -1,4 +1,5 @@
 showNotes();
+flag = 0;
 // if user adds a note, add it to the localstorage
 let addBtn = document.getElementById("addBtn");
 addBtn.addEventListener("click", function (e) {
@@ -27,12 +28,15 @@ function showNotes() {
   let html = "";
   notesObj.forEach(function (element, index) {
     html += `
-      <div class="noteCard my-2 mx-2 card" style="width: 18rem;">
+      <div id="cardColor" class="noteCard my-2 mx-2 card" style="width: 18rem; background-color: #F8EDE3;">
         <div class="card-body">
           <h5 class="card-title">Note ${index + 1}</h5>
           <p class="card-text">${element}</p>
-          <button href="#" class="btn btn-primary">
+          <button id="${index}" onclick="deleteNote(this.id)" class="btn btn-outline-danger">
             Delete Note
+          </button>
+          <button id="${index}" onclick="markNote(this.id)" class="btn btn-outline-warning my-2">
+            Mark Important
           </button>
         </div>
       </div>
@@ -58,7 +62,7 @@ function deleteNote(index) {
   }
   notesObj.splice(index, 1); //remove item with the help of the index given
   localStorage.setItem("notes", JSON.stringify(notesObj));
-  showNotes;
+  showNotes();
 }
 
 // to search
@@ -80,10 +84,31 @@ search.addEventListener("input", function () {
   });
 });
 
+//marking imp
+let red = "rgb(255,148,148)";
+let yellow = "rgb(248,237,227)";
+// function color() {
+//   x.style.color = "#FF9494";
+// }
+
+function markNote(index) {
+  console.log("Marking Important", index);
+
+  var x = document.getElementById("cardColor");
+  currentColor = window.getComputedStyle(x, null);
+  bgColor = currentColor.getPropertyValue("background-color");
+  // document.getElementById("cardColor").innerHTML = bgColor;
+  if (bgColor === yellow) {
+    x.style.backgroundColor = red;
+  }
+  showNotes();
+}
+
 /*
 Further Features:
 1. Add Title
 2. Mark a note as Important
 3. Separate notes by user
 4. Sync and host to web server 
+5. customizing buttons
 */
